@@ -60,10 +60,53 @@ describe('#Person Suite', () => {
   })
 
   describe('#save', () => {
-    it.todo('should throw if firstName is not present')
-    it.todo('should throw if cpf is not present')
-    it.todo('should throw if lastName is not present')
-    it.todo('should not throw if person is valid')
+    it('should throw if firstName is not present', () => {
+      // Arrange
+      const mockPerson = {
+        lastName: 'Doe Bryan',
+        cpf: '44455566699'
+      }
+
+      // Act
+      // Assert
+      expect(() => Person.save(mockPerson)).toThrow(new Error("cannot save invalid person {\"lastName\":\"Doe Bryan\",\"cpf\":\"44455566699\"}"))
+    })
+
+    it('should throw if cpf is not present', () => {
+      // Arrange
+      const mockPerson = {
+        firstName: 'John',
+        lastName: 'Doe Bryan',
+      }
+
+      // Act
+      // Assert
+      expect(() => Person.save(mockPerson)).toThrow(new Error("cannot save invalid person {\"firstName\":\"John\",\"lastName\":\"Doe Bryan\"}"))
+    })
+
+    it('should throw if lastName is not present', () => {
+      // Arrange
+      const mockPerson = {
+        firstName: 'John',
+        cpf: '44455566699'
+      }
+
+      // Act
+      // Assert
+      expect(() => Person.save(mockPerson)).toThrow(new Error("cannot save invalid person {\"firstName\":\"John\",\"cpf\":\"44455566699\"}"))
+    })
+    it('should not throw if person is valid', () => {
+      // Arrange
+      const mockPerson = {
+        firstName: 'John',
+        lastName: 'Doe Bryan',
+        cpf: '44455566699'
+      }
+
+      // Act
+      // Assert
+      expect(() => Person.save(mockPerson)).not.toThrow()
+    })
   })
 
   describe('#process', () => {
