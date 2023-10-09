@@ -1,5 +1,6 @@
 import crypto from 'crypto'
-import fs from 'fs/promises'
+import fsPromises from 'fs/promises'
+import fs from 'fs'
 
 export default class Service {
   #filename
@@ -22,11 +23,15 @@ export default class Service {
       createAt: new Date().toISOString()
     }).concat('\n')
 
-    return fs.appendFile(this.#filename, data)
+    return fsPromises.appendFile(this.#filename, data)
   }
 
   async read() {
-    const lines = (await fs.readFile(this.#filename, 'utf-8')).split('\n').filter(line => !!line)
+    const checkFileExists = fs.existsSync(this.#filename)
+
+    if (!checkFileExists) return {}
+
+    const lines = (await fsPromises.readFile(this.#filename, 'utf-8')).split('\n').filter(line => !!line)
 
     if (!lines.length) return {}
 
