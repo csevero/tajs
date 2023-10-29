@@ -14,7 +14,7 @@ const server = createServer(async (request, response) => {
     const result = Person.process(JSON.parse(data));
     return response.end(JSON.stringify({ result }));
   } catch (err) {
-    if(err.message.includes('required')) {
+    if(err.message.includes('required') || err.message.includes('invalid person')) {
       response.writeHead(400)
       response.write(JSON.stringify({validationError: err.message}))
       response.end()
